@@ -28,7 +28,7 @@ public class Robot extends SampleRobot {
     Joystick stick;
 
     public Robot() {
-        myRobot = new RobotDrive(0, 1);
+        myRobot = new RobotDrive(0, 1, 2, 3);
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
     }
@@ -37,10 +37,6 @@ public class Robot extends SampleRobot {
      * Drive left & right motors for 2 seconds then stop
      */
     public void autonomous() {
-        myRobot.setSafetyEnabled(false);
-        myRobot.drive(-0.5, 0.0);	// drive forwards half speed
-        Timer.delay(2.0);		//    for 2 seconds
-        myRobot.drive(0.0, 0.0);	// stop robot
     }
 
     /**
