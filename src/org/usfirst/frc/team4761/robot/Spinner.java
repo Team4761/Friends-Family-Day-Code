@@ -11,11 +11,6 @@ public class Spinner {
 		spinner2 = new Victor(port2);
 	}
 	
-	public Spinner(Victor victor1, Victor victor2) {
-		spinner1 = victor1;
-		spinner2 = victor2;
-	}
-	
 	public void spin(double speed) {
 		if(speed < 0 || speed > 1) {
 			throw new IllegalArgumentException("Invalid speed for spinner (must be 0..1)");
