@@ -1,8 +1,11 @@
 #Binaries
 bin/
+build/
+dist/
 *.class
 *.jar
 
 #Eclipse
 .classpath
 .project
+.settings/
