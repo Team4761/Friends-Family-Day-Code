@@ -26,11 +26,13 @@ import edu.wpi.first.wpilibj.Timer;
 public class Robot extends SampleRobot {
     RobotDrive myRobot;
     Joystick stick;
+    ButtonManager buttonManager;
 
     public Robot() {
         myRobot = new RobotDrive(0, 1, 2, 3);
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
+        bindButtons();
     }
 
     /**
@@ -54,5 +56,13 @@ public class Robot extends SampleRobot {
      * Runs during test mode
      */
     public void test() {
+    }
+    
+    public void bindButtons() {
+    	buttonManager = new ButtonManager();
+        Method flipperMethod = Flipper.getClass().getMethod("slap");
+        Method spinnetMethod = Spinner.getClass().getMethod("XXXX");	// replace "XXXX" with the name of the method to call to toggle the motors (must accept 0 parameters)
+        buttonManager.runOnceOnPress(1, ButtonManager.CONTROLLER, flipperMethod, null);	// replace null with the Flipper object!
+        buttonManager.setToggle(2, ButtonManager.CONTROLLER, spinnerMethod, null);		// replace null with the Spinner object!
     }
 }
