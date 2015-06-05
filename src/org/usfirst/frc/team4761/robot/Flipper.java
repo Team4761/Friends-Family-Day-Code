@@ -1,13 +1,13 @@
 package org.usfirst.frc.team4761.robot;
 
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.Talon;
 
 public class Flipper {
-	Victor motor;
+	Talon motor;
 	int waitTime;
 	
 	public Flipper(int port, int waitTime){
-		motor = new Victor(port); // We don't know the motor type at this moment. TODO: Fix motor type.
+		motor = new Talon(port); // We don't know the motor type at this moment. TODO: Fix motor type.
 	}
 	
 	public void slap() throws InterruptedException{

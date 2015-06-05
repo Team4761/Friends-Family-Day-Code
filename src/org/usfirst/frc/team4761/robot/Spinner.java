@@ -1,14 +1,15 @@
 package org.usfirst.frc.team4761.robot;
 
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Victor;
 
 public class Spinner {
-	private Victor spinner1;
-	private Victor spinner2;
+	private Talon spinner1;
+	private Talon spinner2;
 	
 	public Spinner(int port1, int port2) {
-		spinner1 = new Victor(port1);
-		spinner2 = new Victor(port2);
+		spinner1 = new Talon(port1);
+		spinner2 = new Talon(port2);
 	}
 	
 	public void spin(double speed) {
