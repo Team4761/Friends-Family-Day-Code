@@ -31,6 +31,7 @@ public class Robot extends SampleRobot {
     ButtonManager buttonManager;
     Flipper flipper;
     Spinner spinner;
+    Rope rope;
 
     public Robot() {
         myRobot = new RobotDrive(0, 1, 2, 3);
@@ -39,6 +40,7 @@ public class Robot extends SampleRobot {
         
         flipper = new Flipper(9, 250);
         spinner = new Spinner(8, 6);
+        rope = new Rope(5);
         bindButtons();
     }
 
