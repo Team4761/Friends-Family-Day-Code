@@ -37,8 +37,8 @@ public class Robot extends SampleRobot {
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
         
-        flipper = new Flipper(0, 2);
-        spinner = new Spinner(0, 0);
+        flipper = new Flipper(9, 1);
+        spinner = new Spinner(8, 6);
         bindButtons();
     }
 
