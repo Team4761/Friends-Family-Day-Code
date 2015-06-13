@@ -8,7 +8,7 @@ public class Spinner {
 	private Talon spinner2;
 	
 	private boolean spinning = false;
-	private double defaultSpeed = -0.75; 
+	private double defaultSpeed = 0.5; 
 	
 	public Spinner(int port1, int port2) {
 		spinner1 = new Talon(port1);
@@ -16,6 +16,9 @@ public class Spinner {
 	}
 	
 	public void spin(double speed) {
+		if(speed < 0 || speed > 1) {
+			throw new IllegalArgumentException("Invalid speed for spinner (must be 0..1)");
+		}
 		spinner1.set(speed);
 		spinner2.set(speed);
 	}
