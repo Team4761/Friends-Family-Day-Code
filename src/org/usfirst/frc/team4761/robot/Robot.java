@@ -38,9 +38,9 @@ public class Robot extends SampleRobot {
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
         
-        flipper = new Flipper(9, 250);
+        flipper = new Flipper(9, 500);
         spinner = new Spinner(8, 6);
-        rope = new Rope(5);
+        rope = new Rope(5); // Not confirmed
         bindButtons();
     }
 
@@ -71,12 +71,16 @@ public class Robot extends SampleRobot {
     	buttonManager = new ButtonManager();
     	try {
     		Method flipperMethod = flipper.getClass().getMethod("slap");
-    		Method spinnerMethod = spinner.getClass().getMethod("toggleSpinning");	// replace "XXXX" with the name of the method to call to toggle the motors (must accept 0 parameters)
-    		buttonManager.runOnPress(1, ButtonManager.CONTROLLER, flipper, flipperMethod);	// replace null with the Flipper object!
-    		buttonManager.setToggle(2, ButtonManager.CONTROLLER, spinner, spinnerMethod);		// replace null with the Spinner object!
-    		} catch (NoSuchMethodException e) {
-    			System.out.println("Error while attempting to bind buttons.");
-    			e.printStackTrace();
-    		}
+    		Method spinnerMethod = spinner.getClass().getMethod("toggleSpinning");
+    		Method pullMethod = rope.getClass().getMethod("pull");
+    		Method releaseMethod = rope.getClass().getMethod("release");
+    		buttonManager.runOnPress(1, ButtonManager.CONTROLLER, flipper, flipperMethod);
+    		buttonManager.setToggle(2, ButtonManager.CONTROLLER, spinner, spinnerMethod);
+    		buttonManager.runOnceOnHold(3, ButtonManager.CONTROLLER, rope, pullMethod);
+    		buttonManager.runOnceOnHold(3, ButtonManager.CONTROLLER, rope, releaseMethod);
+    	} catch (NoSuchMethodException e) {
+    		System.out.println("Error while attempting to bind buttons.");
+    		e.printStackTrace();
+    	}
     }
 }
