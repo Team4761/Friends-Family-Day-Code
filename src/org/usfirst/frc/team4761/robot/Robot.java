@@ -2,6 +2,8 @@
 package org.usfirst.frc.team4761.robot;
 
 
+import java.lang.reflect.Method;
+
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
@@ -27,11 +29,16 @@ public class Robot extends SampleRobot {
     RobotDrive myRobot;
     Joystick stick;
     ButtonManager buttonManager;
+    Flipper flipper;
+    Spinner spinner;
 
     public Robot() {
         myRobot = new RobotDrive(0, 1, 2, 3);
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
+        
+        flipper = new Flipper(9, 250);
+        spinner = new Spinner(8, 6);
         bindButtons();
     }
 
@@ -47,7 +54,7 @@ public class Robot extends SampleRobot {
     public void operatorControl() {
         myRobot.setSafetyEnabled(true);
         while (isOperatorControl() && isEnabled()) {
-            myRobot.mecanumDrive_Cartesian(stick.getRawAxis(0), stick.getRawAxis(1), stick.getRawAxis(4), 0);
+        	myRobot.mecanumDrive_Cartesian(stick.getRawAxis(0), stick.getRawAxis(1), stick.getRawAxis(3), 0);
             Timer.delay(0.005);		// wait for a motor update time
         }
     }
@@ -60,9 +67,14 @@ public class Robot extends SampleRobot {
     
     public void bindButtons() {
     	buttonManager = new ButtonManager();
-        Method flipperMethod = Flipper.getClass().getMethod("slap");
-        Method spinnetMethod = Spinner.getClass().getMethod("XXXX");	// replace "XXXX" with the name of the method to call to toggle the motors (must accept 0 parameters)
-        buttonManager.runOnceOnPress(1, ButtonManager.CONTROLLER, flipperMethod, null);	// replace null with the Flipper object!
-        buttonManager.setToggle(2, ButtonManager.CONTROLLER, spinnerMethod, null);		// replace null with the Spinner object!
+    	try {
+    		Method flipperMethod = flipper.getClass().getMethod("slap");
+    		Method spinnerMethod = spinner.getClass().getMethod("toggleSpinning");	// replace "XXXX" with the name of the method to call to toggle the motors (must accept 0 parameters)
+    		buttonManager.runOnPress(1, ButtonManager.CONTROLLER, flipper, flipperMethod);	// replace null with the Flipper object!
+    		buttonManager.setToggle(2, ButtonManager.CONTROLLER, spinner, spinnerMethod);		// replace null with the Spinner object!
+    		} catch (NoSuchMethodException e) {
+    			System.out.println("Error while attempting to bind buttons.");
+    			e.printStackTrace();
+    		}
     }
 }

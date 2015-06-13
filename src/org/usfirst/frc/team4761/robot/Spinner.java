@@ -7,6 +7,9 @@ public class Spinner {
 	private Talon spinner1;
 	private Talon spinner2;
 	
+	private boolean spinning = false;
+	private double defaultSpeed = 0.5; 
+	
 	public Spinner(int port1, int port2) {
 		spinner1 = new Talon(port1);
 		spinner2 = new Talon(port2);
@@ -23,6 +26,15 @@ public class Spinner {
 	public void stop() {
 		spinner1.set(0);
 		spinner2.set(0);
+	}
+	
+	public void toggleSpinning() {
+		if (spinning) {
+			stop();
+		} else {
+			spin(defaultSpeed);
+		}
+		spinning = !spinning;
 	}
 	
 	public void emergencyStop() {

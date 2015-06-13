@@ -3,7 +3,6 @@ package org.usfirst.frc.team4761.robot;
 import java.lang.reflect.Method;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.usfirst.frc.team4761.robot.commands.debug.PrintCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -50,6 +49,7 @@ public class ButtonManager {
 			
 			new Thread(new ButtonManagerHandler()).start();
 			inited = true;
+			System.out.println("[ButtonManager] Online.");
 		} catch (Exception e) {
 			System.out.println("Error in ButtonManager init!");
 			e.printStackTrace();
@@ -145,6 +145,7 @@ public class ButtonManager {
 				ButtonManager.list.add(this);
 				methodThread = new ButtonThread(method, object);
 				runningThread = new Thread(methodThread);
+				System.out.println("[ButtonCommand] ButtonCommand for method '" + methodThread.handlerMethod.getName() + "' created");
 			} catch (Error e) {
 				System.out.println("Error creating a ButtonCommand!");
 				e.printStackTrace();
@@ -154,11 +155,15 @@ public class ButtonManager {
 				return stick.getRawButton(button);
 		}
 		public void start() {
+			runningThread = new Thread(methodThread);
+			System.out.println("[ButtonCommand] Start running method '" + methodThread.handlerMethod.getName() + "'");
 			runningThread.start();
 		}
 		@SuppressWarnings("deprecation")
 		public void stop() {
+			System.out.println("[ButtonCommand] Stop running method '" + methodThread.handlerMethod.getName() + "'");
 			runningThread.stop();
+			runningThread = null;
 		}
 		public boolean pressed() {
 			return buttonDown && !last;
@@ -170,13 +175,15 @@ public class ButtonManager {
 		private ButtonThread(Method m, Object o) {
 			obj = o;
 			handlerMethod = m;
+			System.out.println("[ButtonThread] ButtonThread for method '" + handlerMethod.getName() + "' created");
 		}
 		@SuppressWarnings("deprecation")
 		public void run() {
 			try {
+				System.out.println("[ButtonThread] Running method '" + handlerMethod.getName() + "'");
 				handlerMethod.invoke(obj, new Object[0]);
 			} catch (Exception e) {
-				System.out.println("[ButtonManager] Error while calling method '" + handlerMethod.getName() + "' on an object of type '" + obj.getClass().getSimpleName() + "'");
+				System.out.println("[ButtonThread] Error while calling method '" + handlerMethod.getName() + "' on an object of type '" + obj.getClass().getSimpleName() + "'");
 				e.printStackTrace();
 				Thread.currentThread().stop();	// In case of error, forcibly stop the running thread.
 			}
