@@ -117,6 +117,11 @@ public class ButtonManager {
 								command.stop();
 								command.store = false;
 							}
+						} else if (command.type == ButtonCommand.TYPE_ROPR) {
+							if (buttonDown && !command.last)
+								command.start();
+							else
+								command.finish();
 						}
 						command.last = buttonDown;
 					}
@@ -134,9 +139,9 @@ public class ButtonManager {
 		private Joystick stick;
 		private int type;
 		private boolean store = false, last = false;
-		private static final int TYPE_TOGGLEABLE = 0, TYPE_ROP = 1, TYPE_RWP = 2, TYPE_CROP = 3;
-		private ButtonThread methodThread;
-		private Thread runningThread;
+		private static final int TYPE_TOGGLEABLE = 0, TYPE_ROP = 1, TYPE_RWP = 2, TYPE_CROP = 3, TYPE_ROPR = 4;
+		private ButtonThread methodThread, finalButtonThread;
+		private Thread runningThread, finalThread;
 		private ButtonCommand(int button, int joystick, Object object, Method method, int type) {
 			try {
 				this.button = button;
@@ -151,6 +156,25 @@ public class ButtonManager {
 				e.printStackTrace();
 			}
 		}
+		private ButtonCommand(int button, int joystick, Object object, Method method, Method finalMethod, int type) {
+			try {
+				this.button = button;
+				this.type = type;
+				stick = ButtonManager.joysticks[joystick];
+				ButtonManager.list.add(this);
+				methodThread = new ButtonThread(method, object);
+				runningThread = new Thread(methodThread);
+				finalButtonThread = new ButtonThread(finalMethod, object);
+				System.out.println("[ButtonCommand] ButtonCommand for method '" + methodThread.handlerMethod.getName() + "' created");
+			} catch (Error e) {
+				System.out.println("Error creating a ButtonCommand!");
+				e.printStackTrace();
+			}
+		}
+		public void finish() {
+			finalThread.start();
+			
+		}
 		public boolean get() {
 				return stick.getRawButton(button);
 		}
@@ -164,6 +188,11 @@ public class ButtonManager {
 			System.out.println("[ButtonCommand] Stop running method '" + methodThread.handlerMethod.getName() + "'");
 			runningThread.stop();
 			runningThread = null;
+			if (finalThread != null)
+			{
+				finalThread.stop();
+				finalThread = null;
+			}
 		}
 		public boolean pressed() {
 			return buttonDown && !last;
