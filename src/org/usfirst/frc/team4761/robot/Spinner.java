@@ -8,8 +8,8 @@ public class Spinner {
 	private Talon spinner2;
 	
 	private boolean spinning = false;
-	private double defaultSpeed = 1;
-	private double secondarySpeed = 0.8;
+	private double defaultSpeed = -1;
+	private double secondarySpeed = -0.5;
 	private double currentSpeed = defaultSpeed;
 	
 	public Spinner(int port1, int port2) {
@@ -18,14 +18,14 @@ public class Spinner {
 	}
 	
 	public void spin(double speed) {
-		if(speed < 0 || speed > 1) {
+		/*if(speed < 0 || speed > 1) {
 			throw new IllegalArgumentException("Invalid speed for spinner (must be 0..1)");
-		}
-		if(RobotMap.safetySensor.getDistance() > RobotMap.safetyAcceptableDistance) {
+		}*/
+		//if(RobotMap.safetySensor.getDistance() > RobotMap.safetyAcceptableDistance) {
 			spinner1.set(speed);
 			spinner2.set(speed);
 			spinning = true;
-		}
+		//}
 	}
 	
 	public void stop() {

@@ -12,9 +12,9 @@ public class Flipper {
 	}
 	
 	public void slap() throws InterruptedException{
-		motor.set(-.25); // TODO: Find out if there are switches to use to prevent stalling motors.
+		motor.set(-0.6); // TODO: Find out if there are switches to use to prevent stalling motors.
 		Thread.sleep(waitTime); // TODO: Find better time to wait for!
-		motor.set(.25);
+		motor.set(0.6);
 		Thread.sleep((int)(waitTime*1.08));
 		motor.set(0);
 	}

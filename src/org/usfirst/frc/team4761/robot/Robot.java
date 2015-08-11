@@ -73,7 +73,7 @@ public class Robot extends SampleRobot {
     		Method flipperMethod = flipper.getClass().getMethod("slap");
     		Method spinnerMethod = spinner.getClass().getMethod("toggleSpinning");
     		Method spinnerToggleMethod = spinner.getClass().getMethod("toggleSpeed");
-    		buttonManager.runOnPress(1, ButtonManager.CONTROLLER, flipper, flipperMethod);
+    		buttonManager.runOnPress(6, ButtonManager.CONTROLLER, flipper, flipperMethod);
     		buttonManager.setToggle(2, ButtonManager.CONTROLLER, spinner, spinnerMethod);
     		buttonManager.setToggle(3, ButtonManager.CONTROLLER, spinner, spinnerToggleMethod); //TODO: replace 3 with a proper number
     		} catch (NoSuchMethodException e) {
