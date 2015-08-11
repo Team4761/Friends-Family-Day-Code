@@ -8,7 +8,9 @@ public class Spinner {
 	private Talon spinner2;
 	
 	private boolean spinning = false;
-	private double defaultSpeed = 0.5; 
+	private double defaultSpeed = 1;
+	private double secondarySpeed = 0.8;
+	private double currentSpeed = defaultSpeed;
 	
 	public Spinner(int port1, int port2) {
 		spinner1 = new Talon(port1);
@@ -36,7 +38,20 @@ public class Spinner {
 		if (spinning) {
 			stop();
 		} else {
-			spin(defaultSpeed);
+			spin(currentSpeed);
+		}
+	}
+	
+	public void toggleSpeed() {
+		if (currentSpeed == defaultSpeed) {
+			currentSpeed = secondarySpeed;
+		}
+		else {
+			currentSpeed = defaultSpeed;
+		}
+		if (spinning) {
+			spinner1.set(currentSpeed);
+			spinner2.set(currentSpeed);
 		}
 	}
 	

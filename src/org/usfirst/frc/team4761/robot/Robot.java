@@ -71,9 +71,11 @@ public class Robot extends SampleRobot {
     	buttonManager = new ButtonManager();
     	try {
     		Method flipperMethod = flipper.getClass().getMethod("slap");
-    		Method spinnerMethod = spinner.getClass().getMethod("toggleSpinning");	// replace "XXXX" with the name of the method to call to toggle the motors (must accept 0 parameters)
-    		buttonManager.runOnPress(1, ButtonManager.CONTROLLER, flipper, flipperMethod);	// replace null with the Flipper object!
-    		buttonManager.setToggle(2, ButtonManager.CONTROLLER, spinner, spinnerMethod);		// replace null with the Spinner object!
+    		Method spinnerMethod = spinner.getClass().getMethod("toggleSpinning");
+    		Method spinnerToggleMethod = spinner.getClass().getMethod("toggleSpeed");
+    		buttonManager.runOnPress(1, ButtonManager.CONTROLLER, flipper, flipperMethod);
+    		buttonManager.setToggle(2, ButtonManager.CONTROLLER, spinner, spinnerMethod);
+    		buttonManager.setToggle(3, ButtonManager.CONTROLLER, spinner, spinnerToggleMethod); //TODO: replace 3 with a proper number
     		} catch (NoSuchMethodException e) {
     			System.out.println("Error while attempting to bind buttons.");
     			e.printStackTrace();
