@@ -19,13 +19,17 @@ public class Spinner {
 		if(speed < 0 || speed > 1) {
 			throw new IllegalArgumentException("Invalid speed for spinner (must be 0..1)");
 		}
-		spinner1.set(speed);
-		spinner2.set(speed);
+		if(RobotMap.safetySensor.getDistance() > RobotMap.safetyAcceptableDistance) {
+			spinner1.set(speed);
+			spinner2.set(speed);
+			spinning = true;
+		}
 	}
 	
 	public void stop() {
 		spinner1.set(0);
 		spinner2.set(0);
+		spinning = false;
 	}
 	
 	public void toggleSpinning() {
@@ -34,11 +38,11 @@ public class Spinner {
 		} else {
 			spin(defaultSpeed);
 		}
-		spinning = !spinning;
 	}
 	
 	public void emergencyStop() {
 		spinner1.stopMotor();
 		spinner2.stopMotor();
+		spinning = false;
 	}
 }

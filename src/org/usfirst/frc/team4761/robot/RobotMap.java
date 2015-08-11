@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4761.robot;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Victor;
 
 /**
@@ -13,4 +14,8 @@ public class RobotMap {
 	public static final int flipperPort = 6;
 	public static final int flipperWaitTime = 500;
 	public static final Flipper flipper = new Flipper(flipperPort, flipperWaitTime);
+	
+	public static final int safetySensorPort = 1;
+	public static final int safetyAcceptableDistance = 150;
+	public static final DistanceSensor safetySensor = new DistanceSensor(new AnalogInput(safetySensorPort));
 }
