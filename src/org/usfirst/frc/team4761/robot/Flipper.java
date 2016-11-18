@@ -15,7 +15,7 @@ public class Flipper {
 	
 	public void slap() throws InterruptedException{
 		motor.set(.75);
-		Thread.sleep(250); // TODO: Find better time to wait for!
+		Thread.sleep(300); // TODO: Find better time to wait for!
 		motor.set(-.75);
 		Thread.sleep(200);
 		motor.set(0);
