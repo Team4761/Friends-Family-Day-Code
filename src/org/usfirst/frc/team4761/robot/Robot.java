@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This is a demo program showing the use of the RobotDrive class.
@@ -34,14 +35,16 @@ public class Robot extends SampleRobot {
     Rope rope;
 
     public Robot() {
-        myRobot = new RobotDrive(0, 1, 2, 3);
+        myRobot = new RobotDrive(1, 3, 0, 2);
         myRobot.setExpiration(0.1);
         stick = new Joystick(0);
         
-        flipper = new Flipper(9, 250);
-        spinner = new Spinner(8, 6);
+        flipper = new Flipper(7, 250);
+        spinner = new Spinner(6, 4);
         rope = new Rope(5);
         bindButtons();
+
+        SmartDashboard.putNumber("Speed", 0.5);
     }
 
     /**
@@ -56,8 +59,10 @@ public class Robot extends SampleRobot {
     public void operatorControl() {
         myRobot.setSafetyEnabled(true);
         while (isOperatorControl() && isEnabled()) {
-        	myRobot.mecanumDrive_Cartesian(stick.getRawAxis(0), stick.getRawAxis(1), stick.getRawAxis(4), 0);
-            Timer.delay(0.005);		// wait for a motor update time
+
+            //myRobot.mecanumDrive_Cartesian(stick.getRawAxis(0), stick.getRawAxis(1), stick.getRawAxis(4), 0);
+            myRobot.arcadeDrive(-stick.getRawAxis(1), -stick.getRawAxis(4));
+            //Timer.delay(0.005);		// wait for a motor update time
         }
     }
 

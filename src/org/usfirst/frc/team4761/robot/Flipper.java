@@ -1,21 +1,23 @@
 package org.usfirst.frc.team4761.robot;
 
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.TalonSRX;
+import edu.wpi.first.wpilibj.Victor;
 
 public class Flipper {
-	Talon motor;
+	Victor motor;
 	int waitTime;
 	
 	public Flipper(int port, int waitTime){
-		motor = new Talon(port); // We don't know the motor type at this moment. TODO: Fix motor type.
+		motor = new Victor(port); // We don't know the motor type at this moment. TODO: Fix motor type.
 		this.waitTime = waitTime;
 	}
 	
 	public void slap() throws InterruptedException{
-		motor.set(-.25); // TODO: Find out if there are switches to use to prevent stalling motors.
-		Thread.sleep(waitTime); // TODO: Find better time to wait for!
-		motor.set(.25);
-		Thread.sleep((int)(waitTime*1.08));
+		motor.set(.75);
+		Thread.sleep(250); // TODO: Find better time to wait for!
+		motor.set(-.75);
+		Thread.sleep(200);
 		motor.set(0);
 	}
 }
